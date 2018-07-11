@@ -1,5 +1,7 @@
 #!/usr/bin/sh
 
+# $1: Docker container name (optional - requires sudo)
+
 cmdline=
 for x in node-*.csv ; do
   bn=`basename $x .csv`
@@ -12,4 +14,12 @@ for x in edge-*.csv ; do
   cmdline="$cmdline --relationships:$n $x"
 done
 
-neo4j-import --into ../debian-neo4j $cmdline
+if [ $# = 1 ]; then
+  echo "Importing data into local Neo4j container $1..."
+  sudo docker exec $1 \
+  neo4j-import --into ../debian-neo4j $cmdline
+else
+  echo "Importing data into local Neo4j server..."
+  neo4j-import --into ../debian-neo4j $cmdline
+fi
+echo "Done"

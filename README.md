@@ -20,7 +20,7 @@ Please be patient.
 from `pull-udd.pl` and generates CSV files ready to be imported into
 Neo4j. It takes as first parameter the UDD dump file.
 - `sort-uniq.sh` ensures that duplicate lines are removed from the CSVs.
-- `build-db.sh` assembles the proper command line for `neo4j-import`.
+- `build-db.sh` assembles the proper command line for `neo4j-import`. (Optionally, into a Docker container - requires sudo)
 - `build-all.sh` glues everything together. It takes as first parameter the UDD
 dump file.
 
