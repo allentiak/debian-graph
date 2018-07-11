@@ -14,17 +14,17 @@ or [debian-package-neo4j.md](debian-package-neo4j.md).
 The scripts here are:
 
 - `pull-udd.pl` queries the UDD and downloads the two tables for packages
-and sources. Needs DBI::PG Perl module. This scripts
+and sources. Needs DBI::PG Perl module. This script
 needs quite some time, as the server is not fast. Please be patient.
-- `generate-graph` is a Perl script that reads the two csv files generated
+- `generate-graph.pl` is a Perl script that reads the two csv files generated
 from `pull-udd.pl` and generates csv files ready to be imported into
 Neo4j
 - `sort-uniq.sh` ensures that duplicate lines are removed from the csvs
-- `build-db` assembles the proper command line for `neo4j-import`
-- `build-all` glues everything together
+- `build-db.sh` assembles the proper command line for `neo4j-import`
+- `build-all.sh` glues everything together
 
-After the scripts has run, the files generated are in `debian-neo4j` 
-and can be used as Neo4j database files.
+Once the scripts have been executed, the Neo4j database files are generated in
+ `debian-neo4j`.
 
 Comments and improvements are always welcome.
 

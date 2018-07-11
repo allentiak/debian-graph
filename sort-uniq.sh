@@ -1,3 +1,4 @@
+#!/usr/bin/sh
 
 # unify lines of files to guarantee no multiple connections
 for i in ddb/*.csv ; do
@@ -5,4 +6,3 @@ for i in ddb/*.csv ; do
   tail -n +2 $i | sort | uniq >> bla
   mv bla $i
 done
-

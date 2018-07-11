@@ -1,3 +1,4 @@
+#!/usr/bin/sh
 
 cmdline=
 for x in node-*.csv ; do
@@ -12,4 +13,3 @@ for x in edge-*.csv ; do
 done
 
 neo4j-import --into ../debian-neo4j $cmdline
-

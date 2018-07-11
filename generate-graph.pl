@@ -232,7 +232,7 @@ sub generate_files {
         # we cannot simply search for the same version number
         # due to binary rebuilds, which have version number:
         #  2222-4+... (part +....)
-        # loop over the binary package versions, 
+        # loop over the binary package versions,
         # strip any +.. part *AFTER* a - (that is in the debian version)
         my $found = 0;
         for my $bv (keys(%{$data{'bin'}{$binpkg}})) {
@@ -250,7 +250,7 @@ sub generate_files {
           # be sources that build a package for a different arch!
           #
           # Another reason is for udeb packages
-          # here we need to check not only the Binaries field, but the 
+          # here we need to check not only the Binaries field, but the
           # actual Package-List to make sure to only include non-udeb stuff!!!
           #
           # TODO - work on udeb packages
