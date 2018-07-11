@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+# $1: UDD dump file
+
 
 $^W = 1;
 use strict;
@@ -37,5 +39,7 @@ if ($ret) {
   die("Cannot get packages $!");
 }
 
-open(my $fd, ">", "udd.dump") || die("Cannot open udd.dump for writing: $!");
+$out_filename =~ s#^(\s)#./$1#;
+open(my $fd, "> $out_filename\0") || die "Can't open $out_filename for writing: $!");
+
 print $fd Data::Dumper->Dump([\$sources, \$packages], [qw(source packages)]);

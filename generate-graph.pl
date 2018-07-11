@@ -1,8 +1,9 @@
 #!/usr/bin/perl
 
-#
 # Usage: apt-to-gdb
 #
+# $1: UDD dump file
+
 
 use utf8;
 use Data::Dumper;
@@ -31,12 +32,15 @@ die "Files already present in $destdir!" if ( -r "$destdir/node-vsp.csv");
 #  print "$k = $foo->{$k}\n";
 #}
 #print "FINISHED READING\n\n";
-#open(my $fd, ">", "debian-packages-udd.dump") || die("Cannot open debian.dump: $!");
+#open(my $fd, ">", "debian-packages-udd.dump") || die("Cannot open 'debian-packages-udd.dump' for writing: $!");
 #print $fd Data::Dumper->Dump([$foo], [qw(foo)]);
 #close($fd);
 
-print "Reading UDD dump ...\n";
-open my $in, '<', 'udd.dump' or die $!;
+print "Reading UDD dump from $1...\n";
+
+$in_filename =~ s#^(\s)#./$1#;
+open(my $in, "< $in_filename\0") || die "Can't open $in_filename: $!";
+
 my $vars;
 {
   undef $/;
