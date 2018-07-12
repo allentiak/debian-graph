@@ -12,15 +12,15 @@ A detailed description of the process is available either on my blog
 or [debian-package-neo4j.md](debian-package-neo4j.md).
 
 The scripts here are:
-- `pull-udd.pl` queries the UDD dump file and downloads the two tables for packages
+- `udd2dump.pl` queries the UDD dump file and downloads the two tables for packages
 and sources. Needs DBI::PG Perl module. It takes as first parameter the UDD
 dump file. This script needs quite some time, as the server is not fast.
 Please be patient.
-- `generate-graph.pl` reads the two CSV files generated
-from `pull-udd.pl` and generates CSV files ready to be imported into
+- `dump2graphCSVs.pl` reads the two CSV files generated
+from `udd2dump.pl` and generates CSV files ready to be imported into
 Neo4j. It takes as first parameter the UDD dump file.
-- `sort-uniq.sh` ensures that duplicate lines are removed from the CSVs.
-- `build-db.sh` assembles the proper command line for `neo4j-import`. (Optionally, into a Docker container - requires sudo)
+- `sort_uniq-graph_CSVs.sh` ensures that duplicate lines are removed from the CSVs.
+- `graphCSVs2Neo4j.sh` assembles the proper command line for `neo4j-import`. (Optionally, into a Docker container - requires sudo)
 - `build-all.sh` glues everything together. It takes as first parameter the UDD
 dump file.
 

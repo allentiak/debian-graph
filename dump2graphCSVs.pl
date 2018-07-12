@@ -1,7 +1,5 @@
 #!/usr/bin/perl
 
-# Usage: apt-to-gdb
-#
 # $1: UDD dump file
 
 

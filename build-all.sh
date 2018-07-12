@@ -1,15 +1,15 @@
 #!/usr/bin/sh
 
-# $1: UDD dump file
+# $1: UDD dump file to generate
 # $2: Docker container name (optional - requires sudo)
 
 set -e
-perl pull-udd.pl $1
+perl udd2dump.pl $1
 mkdir ddb
-perl generate-graph.pl $1
-bash sort-uniq.sh
+perl dump2graphCSVs.pl $1
+bash sort_uniq-graph_CSVs.sh
 cd ddb
-bash ../build-db.sh $2
+bash ../graphCSVs2Neo4j.sh $2
 cd ..
 
 echo "DONE: database files are in 'debian-neo4j'"
