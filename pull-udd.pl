@@ -54,6 +54,5 @@ if ($ret_packages) {
 $out_filename =~ s#^(\s)#./$1#;
 open(my $fd, "> $out_filename\0") || die "Can't open $out_filename for writing: $!");
 #
-# Please, respect the 'qw(source packages)' interface!
-# It is used by 'generate-graph.pl'.
-print $fd Data::Dumper->Dump([\$sources, \$binaries], [qw(source packages)]);
+# The 'qw(sources packages)' interface must match the ones in 'read_sources_file()' and 'read_packages_file()', from 'generate-graph.pl'.
+print $fd Data::Dumper->Dump([\$sources, \$packages], [qw(sources packages)]);

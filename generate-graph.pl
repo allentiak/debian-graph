@@ -22,8 +22,10 @@ my %data;
 
 my $destdir = "ddb";
 
-die "Files already present in $destdir!" if ( -r "$destdir/node-vsp.csv");
+if ( -r "$destdir/node-vsp.csv") { die "Files already present in $destdir!" };
 
+# DEBUG
+#
 #open my $fh, "<:encoding(UTF-8)", "packages.csv" or die "sources.csv: $!";
 #$csv->column_names($csv->getline($fh));
 #my $foo = $csv->getline_hr($fh);
@@ -52,19 +54,25 @@ my $packages;
 eval $vars;
 
 print "Working on binary packages ...\n";
-read_package_file();
+read_packages_file();
 print "Working on source packages ...\n";
-read_source_file();
+read_sources_file();
 
 print "Generating files ...\n";
 generate_files();
 print "Done.\n";
 
+# DEBUG
+#
 #open(my $fd, ">", "debian.dump") || die("Cannot open debian.dump: $!");
 #print $fd Data::Dumper->Dump([\%data], [qw(data)]);
 #close($fd);
 
 exit(0);
+
+
+
+# Auxiliary functions
 
 sub myuuid {
   my $foo = uuid();
@@ -416,7 +424,8 @@ sub parse_version {
   return($realdep, $realrel, $realver);
 }
 
-sub read_package_file {
+sub read_packages_file {
+  # '@$$packages' interface name must match the one from the last line in 'pull-udd.pl'
   for my $pkgpt (@$$packages) {
     my ($pkg,$version,$memail,$mname,$suite,$desc,@deplist) = @$pkgpt;
     my %deps;
@@ -450,8 +459,9 @@ sub read_package_file {
   }
 }
 
-sub read_source_file {
-  for my $pkgpt (@$$source) {
+sub read_sources_file {
+  # '@$$sources' interface name must match the one from the last line in 'pull-udd.pl'
+  for my $pkgpt (@$$sources) {
     my ($pkg,$version,$memail,$mname,$suite,$uploaders,$bin,$architecture,@deplist) = @$pkgpt;
     my %deps;
     # tricky way to merge keys and values into hash!
