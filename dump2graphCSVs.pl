@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # $1: UDD dump file
-
+# $2: destination directory;
 
 use utf8;
 use Data::Dumper;
@@ -11,16 +11,17 @@ $Data::Dumper::Indent = 1;
 $Data::Dumper::Sortkeys = 0;  # stable output
 $Data::Dumper::Purity = 0; # recursive structures must be safe
 
+my $udd_dumpfile = $ARGV[0];
+my $destdir = $ARGV[1];
+
 my @srcdeps = qw/build_depends build_depends_indep build_conflicts build_conflicts_indep/;
 my @bindeps = qw/depends recommends suggests conflicts breaks provides replaces pre_depends enhances/;
-
 
 (my $self = $0) =~ s#.*/##;
 my %data;
 
-my $destdir = "ddb";
-
-if ( -r "$destdir/node-vsp.csv") { die "Files already present in $destdir!" };
+if (-r "$destdir/node-vsp.csv")
+  { die "Files already present in $destdir!" };
 
 # DEBUG
 #
@@ -36,10 +37,10 @@ if ( -r "$destdir/node-vsp.csv") { die "Files already present in $destdir!" };
 #print $fd Data::Dumper->Dump([$foo], [qw(foo)]);
 #close($fd);
 
-print "Reading UDD dump from $1...\n";
+print "Reading UDD dump from $udd_dumpfile...\n";
 
-$in_filename =~ s#^(\s)#./$1#;
-open(my $in, "< $in_filename\0") || die "Can't open $in_filename: $!";
+$in_filename =~ s#^(\s)#./$udd_dumpfile#;
+open (my $in, "<", "$in_filename") || die "Can't open $in_filename: $!";
 
 my $vars;
 {
@@ -62,7 +63,7 @@ print "Done.\n";
 
 # DEBUG
 #
-#open(my $fd, ">", "debian.dump") || die("Cannot open debian.dump: $!");
+#open(my $fd, ">", $udd_dupmfile) || die("Cannot open dump file: $!");
 #print $fd Data::Dumper->Dump([\%data], [qw(data)]);
 #close($fd);
 

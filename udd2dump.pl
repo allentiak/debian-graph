@@ -2,6 +2,7 @@
 
 # $1: UDD dump file to generate
 
+my $udd_dumpfile = $ARGV[0]
 
 $^W = 1;
 use strict;
@@ -11,11 +12,18 @@ $Data::Dumper::Indent = 1;
 $Data::Dumper::Sortkeys = 1;  # stable output
 $Data::Dumper::Purity = 1; # recursive structures must be safe
 
-my $limit = " limit 10";
-#my $limit = "";
+my $db_name = "udd";
+my $db_host = "public-udd-mirror.xvm.mit.edu";
+my $db_user = "public-udd-mirror";
+my $db_pass = "public-udd-mirror";
 
-my $udd = DBI->connect("DBI:Pg:dbname=udd;host=public-udd-mirror.xvm.mit.edu", "public-udd-mirror", "public-udd-mirror");
-#my $udd = DBI->connect("DBI:Pg:dbname=udd;host=localhost", "user", "password");
+my $udd = DBI->connect("DBI:Pg:dbname=$db_name;host=$db_host", $db_user, $db_pass);
+
+my $limit = "";
+
+# DEBUG
+#
+#$limit = " limit 10";
 
 
 # Column names:
@@ -53,8 +61,8 @@ if ($ret_packages) {
 
 # Writing to file...
 #
-$out_filename =~ s#^(\s)#./$1#;
-open(my $fd, "> $out_filename\0") || die "Can't open $out_filename for writing: $!");
+$out_filename =~ s#^(\s)#./$udd_dumpfile#;
+open(my $fd, ">" , "$out_filename") || die ("Can't open $out_filename for writing: $!");
 #
-# The 'qw(sources packages)' interface must match the ones in 'read_sources_file()' and 'read_packages_file()', from 'generate-graph.pl'.
+# The 'qw(sources packages)' interface must match the ones in 'read_sources_file()' and 'read_packages_file()', from 'dump2graphCSVs.pl'.
 print $fd Data::Dumper->Dump([\$sources, \$packages], [qw(sources packages)]);
